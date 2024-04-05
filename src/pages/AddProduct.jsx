@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function AddProduct() {
+  const [image, setImage] = useState()
+  const [category, setCategory] = useState()
+  const [disc, setDisc] = useState()
+  const [price, setPrice] = useState()
+  const [projuctName, setProjuctName] = useState()
+
+
   return (
     <div className="p-4 w-full sm:max-w-[70%] text-left max-h-full">
       <div className="bg-white rounded-lg shadow dark:bg-gray-700">
@@ -14,10 +21,10 @@ function AddProduct() {
           </button>
         </div>
         {/* Modal body */}
-        <form className="p-4 md:p-5">
+        <div className="p-4 md:p-5">
           <div className="grid gap-4 mb-4 grid-cols-2">
             <div className="col-span-2 sm:col-span-1 flex items-center justify-center w-full">
-              <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+              <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
@@ -29,32 +36,32 @@ function AddProduct() {
               </label>
             </div>
 
-            <img class="col-span-2 sm:col-span-1 w-full object-cover rounded-lg shadow-xl dark:shadow-gray-800" src="https://flowbite.com/docs/images/examples/image-1@2x.jpg" alt="image description"/>
+            <img className="col-span-2 sm:col-span-1 w-full object-cover rounded-lg shadow-xl dark:shadow-gray-800" src="https://flowbite.com/docs/images/examples/image-1@2x.jpg" alt="image description" />
 
-              <div className="col-span-2">
-                <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required />
-              </div>
-              <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                <input type="number" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$2999" required />
-              </div>
-              <div className="col-span-2 sm:col-span-1">
-                <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                <select id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                  <option selected>Select category</option>
-                  <option value="TV">TV/Monitors</option>
-                  <option value="PC">PC</option>
-                  <option value="GA">Gaming/Console</option>
-                  <option value="PH">Phones</option>
-                </select>
-              </div>
-              <div className="col-span-2">
-                <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
-                <textarea id="description" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write product description here"></textarea>
-              </div>
+            <div className="col-span-2">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+              <input type="text" name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required />
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+              <input type="number" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$2999" required />
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+              <select id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option selected>Select category</option>
+                <option value="TV">TV/Monitors</option>
+                <option value="PC">PC</option>
+                <option value="GA">Gaming/Console</option>
+                <option value="PH">Phones</option>
+              </select>
+            </div>
+            <div className="col-span-2">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Description</label>
+              <textarea id="description" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write product description here"></textarea>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   )
