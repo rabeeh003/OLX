@@ -8,6 +8,7 @@ import { auth } from '../conf/firebase';
 function Navbar() {
     const [isLangOpen, setIsLangOpen] = useState(false);
     const user = localStorage.getItem("user")
+    const userData = JSON.parse(localStorage.getItem("userDetail"))
     const toggleLang = () => {
         setIsLangOpen(!isLangOpen);
     };
@@ -74,8 +75,14 @@ function Navbar() {
                                 onClick={toggleLang}
                                 className="inline-flex items-center font-medium justify-center px-4 py-2 mx-1 text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                             >
-                                <img src='https://cdn-icons-png.freepik.com/256/1177/1177568.png' width={35} />
-                                <span className='pl-2'>Login</span>
+                                {userData ? (
+                                    <img className='rounded-full' src={userData.profile} width={35} height={"100%"} alt="User Profile" />
+                                ) : (
+                                    <>
+                                        <img className='rounded-full' src='https://cdn-icons-png.freepik.com/256/1177/1177568.png' width={35} alt="Default Profile" />
+                                        <span className='pl-2'>Login</span>
+                                    </>
+                                )}
                             </button>
                             <div className={`z-50 ${isLangOpen ? 'block' : 'hidden'
                                 } absolute my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 min-w-[150px]`}
@@ -85,8 +92,14 @@ function Navbar() {
                                         <li>
                                             <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                                 <div className="flex-col">
-                                                    <img className='m-auto' src='https://cdn-icons-png.freepik.com/256/1177/1177568.png' width={45} />
-                                                    <h3>Name</h3>
+                                                    {userData ? (
+                                                        <>
+                                                            <img className='m-auto rounded-full mb-2' src={userData.profile} width={45} height={"100%"} alt="User Profile" />
+                                                            <h3>{userData.name}</h3>
+                                                        </>
+                                                    ) : (
+                                                        <img className='rounded-full' src='https://cdn-icons-png.freepik.com/256/1177/1177568.png' width={35} alt="Default Profile" />
+                                                    )}
                                                 </div>
                                             </a>
                                         </li>
@@ -113,7 +126,7 @@ function Navbar() {
                                 )}
                             </div>
                         </div>
-                        <NavLink to={'/sell'} className='relative cursor-pointer'>
+                        <NavLink to={user ? ('/sell') : ('/signin')} className='relative cursor-pointer'>
                             <img className='rounded-xl' src={sell} width={80} />
                             <span className='absolute top-1 left-4 font-bold' >+ Sell</span>
                         </NavLink>

@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import logo from '../assets/images/logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
-import { collection, addDoc } from 'firebase/firestore'
-import { auth, db } from '../conf/firebase'
+import { collection, addDoc, getDoc } from 'firebase/firestore'
+import { auth, db, storage } from '../conf/firebase'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { v4 } from 'uuid'
 
 function Signup() {
     const dbRef = collection(db, "userDetails")
-
+    const [image, setImage] = useState()
+    const [profileImageURL, setProfileImageURL] = useState(null)
     const [name, setName] = useState('')
     const [number, setNumber] = useState(null)
     const [address, setAddress] = useState('')
@@ -24,18 +27,36 @@ function Signup() {
         try {
             const res = await createUserWithEmailAndPassword(auth, email, password);
             console.log(res.user);
-            await sendEmailVerification(auth.currentUser)
-            await addDoc(dbRef, {
+            console.log(auth.currentUser);
+            await sendEmailVerification(res.user)
+            const imgs = ref(storage, `profile_images/${v4()}`);
+            const uploadTaskSnapshot = await uploadBytes(imgs, image);
+            const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
+            const imageUrl = downloadURL.toString();
+            const userRes = await addDoc(dbRef, {
+                profile: imageUrl,
                 address: address,
                 email: email,
                 name: name,
-                phone: number,
-                userId: userId
+                phone: number
             })
+            console.log("userRes",userRes);
             navigate('/signin')
 
         } catch (error) {
             setError(error.message);
+        }
+    }
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        setImage(file)
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = () => {
+                setProfileImageURL(reader.result)
+            }
+            reader.readAsDataURL(file)
         }
     }
 
@@ -60,6 +81,25 @@ function Signup() {
                         </div>
                         <p className='my-2'>or</p>
                         <form onSubmit={register} className="space-y-4 md:space-y-6 text-left">
+                            {image ? (
+                                <>
+                                    <img className="col-span-2 sm:col-span-1 w-full max-h-[250px] object-contain rounded-lg shadow-xl dark:shadow-gray-800" src={profileImageURL ? (profileImageURL) : ("https://www.creativefabrica.com/wp-content/uploads/2021/04/05/Photo-Image-Icon-Graphics-10388619-1-1-580x386.jpg")} alt="image description" />
+                                    <input name={profileImageURL} onChange={handleFileChange} accept="image/*" type="file" />
+                                </>
+                            ) : (
+                                <div className="col-span-1 flex items-center justify-center w-full">
+                                    <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                            </svg>
+                                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                            <p className="text-xs text-center text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                        </div>
+                                        <input onChange={handleFileChange} id="dropzone-file" accept="image/*" type="file" className="hidden" />
+                                    </label>
+                                </div>
+                            )}
                             <div>
                                 <label for="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} name="name" id="name" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Arakkal abu" required="" />
