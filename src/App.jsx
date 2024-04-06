@@ -8,12 +8,12 @@ import AddProduct from './pages/AddProduct';
 import { createContext } from "react";
 
 function App() {
-  const UserData = createContext()
-  const user = localStorage.getItem("user")
+  const UserDataContext = createContext()
+  const user = localStorage.getItem("userDetail")
 
   return (
     <BrowserRouter>
-      <UserData.Provider value={user}>
+      <UserDataContext.Provider value={user}>
         <Routes>
           <Route path='/signup' element={<Signup />} />
           <Route path='/signin' element={<Signin />} />
@@ -22,7 +22,7 @@ function App() {
             <Route path='/sell' element={<AddProduct />} />
           </Route>
         </Routes>
-      </UserData.Provider>
+      </UserDataContext.Provider>
     </BrowserRouter>
   )
 }
