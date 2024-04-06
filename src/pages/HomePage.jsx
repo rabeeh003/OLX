@@ -23,7 +23,7 @@ function HomePage() {
         <AllProducts.Provider value={products}>
             <div className='px-5 w-[100%] lg:w-[70%]'>
                 <h2 className='text-left text-xl mb-4 sm:text-2xl'>Fresh recommendations</h2>
-                <div className='flex flex-wrap gap-4 sm:justify-between justify-evenly'>
+                <div className='grid md:grid-cols-2 2xl:grid-cols-3 gap-4'>
                     {products.map((product, index) => (
                         <ProductCard key={index} data={product} />
                     ))}

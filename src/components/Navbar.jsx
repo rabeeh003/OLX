@@ -17,6 +17,7 @@ function Navbar() {
         await signOut(auth)
         localStorage.removeItem("user")
         localStorage.removeItem("authToken")
+        localStorage.removeItem("userDetail")
     }
 
     return (
@@ -76,7 +77,9 @@ function Navbar() {
                                 className="inline-flex items-center font-medium justify-center px-4 py-2 mx-1 text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                             >
                                 {userData ? (
-                                    <img className='rounded-full' src={userData.profile} width={35} height={"100%"} alt="User Profile" />
+                                    <div className='object-cover h-["50px"] w-["50px"]'>
+                                        <img className='rounded-full' src={userData.profile} width={"50px"} alt="User Profile" />
+                                    </div>
                                 ) : (
                                     <>
                                         <img className='rounded-full' src='https://cdn-icons-png.freepik.com/256/1177/1177568.png' width={35} alt="Default Profile" />
