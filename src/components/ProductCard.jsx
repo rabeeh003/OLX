@@ -27,7 +27,7 @@ function ProductCard(product) {
 
             {isModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="w-full max-w-5xl p-4 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+                    <div className="w-full max-w-5xl p-4 bg-white bg-opacity-90 rounded-lg shadow-lg dark:bg-gray-800">
                         <div className="flex justify-between items-center border-b pb-4">
                             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Product Details</h2>
                             <button onClick={closeModal} className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 focus:outline-none">
