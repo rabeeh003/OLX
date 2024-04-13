@@ -16,6 +16,10 @@ function AddProduct() {
   const [price, setPrice] = useState()
   const [productName, setProductName] = useState()
 
+  if (!userMail){
+    navgate("/")
+  }
+
   const handleFileChange = (e) => {
     const file = e.target.files[0]
     setImage(file)
